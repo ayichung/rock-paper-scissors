@@ -1,8 +1,8 @@
 function getComputerChoice() {
-    const choices = ["rock", "paper", "scissors"]
-    let rand = Math.floor(Math.random()*choices.length)
-    return choices[rand]
-}
+    const choices = ["rock", "paper", "scissors"];
+    let rand = Math.floor(Math.random()*choices.length);
+    return choices[rand];
+};
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection == "rock") {
@@ -20,15 +20,16 @@ function playRound(playerSelection, computerSelection) {
         if (computerSelection == "paper") { return "player" }
         if (computerSelection == "scissors") { return "tie" }
     }
-}
+};
 
 function game() {
-    let round = 1
-    let playerWin = 0
-    let compWin = 0
+    let round = 1;
+    let playerWin = 0;
+    let compWin = 0;
 
     while (round <= 5) {
-        let player = prompt(`Round ${round}: rock, paper, or scissors?`).toLowerCase()
+        let player = prompt(`Round ${round}: rock, paper, or scissors?`)
+        player = player.toLowerCase()
         let comp = getComputerChoice()
         let result = playRound(player, comp)
         if (result == "player") {
@@ -45,6 +46,6 @@ function game() {
         console.log(`Current scores\nComputer: ${compWin}\nPlayer: ${playerWin}`)
         round += 1
     }
-}
+};
 
-game()
+game();
