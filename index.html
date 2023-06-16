@@ -6,9 +6,9 @@
     </head>
     <body>
         <div class="buttons">
-            <button id="rock">Rock</button>
-            <button id="paper">Paper</button>
-            <button id="scissors">Scissors</button>
+            <button class="choice" id="rock">Rock</button>
+            <button class="choice" id="paper">Paper</button>
+            <button class="choice" id="scissors">Scissors</button>
         </div>
         <div class="results">
             <p class="round-status">Click a button to play. The first to 5 points wins the game!</p>
@@ -17,6 +17,7 @@
                 <p>Computer: <span class="computer">0</span></p>
             </div>
             <p class="game-status"></p>
+            <button id="reset" hidden>Play again</button>
         </div>
         <script src="game.js"></script>
     </body>

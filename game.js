@@ -1,12 +1,16 @@
 /* global vars */
 let playerWin = 0;
 let compWin = 0;
+const playerScore = document.querySelector(".player");
+const compScore = document.querySelector(".computer");
 const roundStatus = document.querySelector(".round-status");
 const gameStatus = document.querySelector(".game-status")
-const btns = document.querySelectorAll("button");
+const btns = document.querySelectorAll(".choice");
+const reset_btn = document.querySelector("#reset");
 
 /* event listeners */
 btns.forEach(btn => btn.addEventListener("click", () => playRound(btn.getAttribute("id"))))
+reset_btn.addEventListener("click", () => resetGame())
 
 /* functions */
 function getCompChoice() {
@@ -21,13 +25,11 @@ function toCap(choice) {
 
 function updateScore(winner) {
     if (winner == "player") {
-        let playerScore = document.querySelector(".player");
         playerWin += 1;
         playerScore.textContent = playerWin;
 
     }
     else {
-        let compScore = document.querySelector(".computer");
         compWin += 1;
         compScore.textContent = compWin;
     }
@@ -35,11 +37,23 @@ function updateScore(winner) {
 
 function updateGame() {
     if (playerWin == 5) {
-        gameStatus.textContent = "You win the game!"
+        gameStatus.textContent = "You win the game!";
+        reset_btn.removeAttribute("hidden");
     }
     else if (compWin == 5) {
-        gameStatus.textContent = "You lose the game!"
+        gameStatus.textContent = "You lose the game!";
+        reset_btn.removeAttribute("hidden");
     }
+}
+
+function resetGame() {
+    playerWin = 0;
+    compWin = 0;
+    roundStatus.textContent = "Click a button to play. The first to 5 points wins the game!"
+    gameStatus.textContent = "";
+    reset_btn.setAttribute("hidden", "");
+    playerScore.textContent = playerWin;
+    compScore.textContent = compWin;
 }
 
 function playRound(playerChoice) {
