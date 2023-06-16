@@ -9,8 +9,8 @@ const btns = document.querySelectorAll(".choice");
 const reset_btn = document.querySelector("#reset");
 
 /* event listeners */
-btns.forEach(btn => btn.addEventListener("click", () => playRound(btn.getAttribute("id"))))
-reset_btn.addEventListener("click", () => resetGame())
+btns.forEach(btn => btn.addEventListener("click", () => playRound(btn.getAttribute("id"))));
+reset_btn.addEventListener("click", () => resetGame());
 
 /* functions */
 function getCompChoice() {
@@ -39,10 +39,12 @@ function updateGame() {
     if (playerWin == 5) {
         gameStatus.textContent = "You win the game!";
         reset_btn.removeAttribute("hidden");
+        btns.forEach(btn => btn.disabled = true);
     }
     else if (compWin == 5) {
         gameStatus.textContent = "You lose the game!";
         reset_btn.removeAttribute("hidden");
+        btns.forEach(btn => btn.disabled = true);
     }
 }
 
@@ -54,6 +56,7 @@ function resetGame() {
     reset_btn.setAttribute("hidden", "");
     playerScore.textContent = playerWin;
     compScore.textContent = compWin;
+    btns.forEach(btn => btn.disabled = false);
 }
 
 function playRound(playerChoice) {
