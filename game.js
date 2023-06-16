@@ -1,8 +1,8 @@
 /* global vars */
-let round = 1;
 let playerWin = 0;
 let compWin = 0;
-const roundStatus = document.querySelector(".status");
+const roundStatus = document.querySelector(".round-status");
+const gameStatus = document.querySelector(".game-status")
 const btns = document.querySelectorAll("button");
 
 /* event listeners */
@@ -35,29 +35,26 @@ function updateScore(winner) {
 
 function updateGame() {
     if (playerWin == 5) {
-        roundStatus.textContent = "You win the game!"
+        gameStatus.textContent = "You win the game!"
     }
     else if (compWin == 5) {
-        roundStatus.textContent = "You lose the game!"
-    }
-    else {
-        round += 1;
+        gameStatus.textContent = "You lose the game!"
     }
 }
 
-function playRound(p_choice) {
-    let c_choice = getCompChoice();
-    if (p_choice == c_choice) {  // tie
-        roundStatus.textContent = `Round ${round}: It's a tie! You both played ${toCap(p_choice)}.`;
+function playRound(playerChoice) {
+    let compChoice = getCompChoice();
+    if (playerChoice == compChoice) {  // tie
+        roundStatus.textContent = `It's a tie! You both played ${toCap(playerChoice)}.`;
     }
-    else if ((p_choice == "rock" && c_choice == "scissors") || 
-            (p_choice == "paper" && c_choice == "rock") || 
-            (p_choice == "scissors" && c_choice == "paper")) {  // player win
-        roundStatus.textContent = `Round ${round}: You win! ${toCap(p_choice)} beats ${toCap(c_choice)}.`;
+    else if ((playerChoice == "rock" && compChoice == "scissors") || 
+            (playerChoice == "paper" && compChoice == "rock") || 
+            (playerChoice == "scissors" && compChoice == "paper")) {  // player win
+        roundStatus.textContent = `You win! ${toCap(playerChoice)} beats ${toCap(compChoice)}.`;
         updateScore("player");
     }
     else {  // comp win
-        roundStatus.textContent = `Round ${round}: You lose! ${toCap(c_choice)} beats ${toCap(p_choice)}.`;
+        roundStatus.textContent = `You lose! ${toCap(compChoice)} beats ${toCap(playerChoice)}.`;
         updateScore("comp");
     }
     updateGame();
