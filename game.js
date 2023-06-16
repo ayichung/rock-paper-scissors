@@ -1,51 +1,64 @@
-function getComputerChoice() {
+/* global vars */
+let round = 1;
+let playerWin = 0;
+let compWin = 0;
+const roundStatus = document.querySelector(".status");
+const btns = document.querySelectorAll("button");
+
+/* event listeners */
+btns.forEach(btn => btn.addEventListener("click", () => playRound(btn.getAttribute("id"))))
+
+/* functions */
+function getCompChoice() {
     const choices = ["rock", "paper", "scissors"];
     let rand = Math.floor(Math.random()*choices.length);
     return choices[rand];
-};
+}
 
-function playRound(playerSelection, computerSelection) {
-    if (playerSelection == "rock") {
-        if (computerSelection == "rock") { return "tie" }
-        if (computerSelection == "paper") { return "comp" }
-        if (computerSelection == "scissors") { return "player" }
-    }
-    if (playerSelection == "paper") {
-        if (computerSelection == "rock") { return "player" }
-        if (computerSelection == "paper") { return "tie" }
-        if (computerSelection == "scissors") { return "comp" }
-    }
-    if (playerSelection == "scissors") {
-        if (computerSelection == "rock") { return "comp" }
-        if (computerSelection == "paper") { return "player" }
-        if (computerSelection == "scissors") { return "tie" }
-    }
-};
+function toCap(choice) {
+    return choice.charAt(0).toUpperCase() + choice.slice(1);
+}
 
-function game() {
-    let round = 1;
-    let playerWin = 0;
-    let compWin = 0;
+function updateScore(winner) {
+    if (winner == "player") {
+        let playerScore = document.querySelector(".player");
+        playerWin += 1;
+        playerScore.textContent = playerWin;
 
-    while (round <= 5) {
-        let player = prompt(`Round ${round}: rock, paper, or scissors?`)
-        player = player.toLowerCase()
-        let comp = getComputerChoice()
-        let result = playRound(player, comp)
-        if (result == "player") {
-            console.log("You won!")
-            playerWin += 1
-        }
-        else if (result == "comp") {
-            console.log("The computer won!")
-            compWin += 1
-        }
-        else {
-            console.log("It was a tie!")
-        }
-        console.log(`Current scores\nComputer: ${compWin}\nPlayer: ${playerWin}`)
-        round += 1
     }
-};
+    else {
+        let compScore = document.querySelector(".computer");
+        compWin += 1;
+        compScore.textContent = compWin;
+    }
+}
 
-game();
+function updateGame() {
+    if (playerWin == 5) {
+        roundStatus.textContent = "You win the game!"
+    }
+    else if (compWin == 5) {
+        roundStatus.textContent = "You lose the game!"
+    }
+    else {
+        round += 1;
+    }
+}
+
+function playRound(p_choice) {
+    let c_choice = getCompChoice();
+    if (p_choice == c_choice) {  // tie
+        roundStatus.textContent = `Round ${round}: It's a tie! You both played ${toCap(p_choice)}.`;
+    }
+    else if ((p_choice == "rock" && c_choice == "scissors") || 
+            (p_choice == "paper" && c_choice == "rock") || 
+            (p_choice == "scissors" && c_choice == "paper")) {  // player win
+        roundStatus.textContent = `Round ${round}: You win! ${toCap(p_choice)} beats ${toCap(c_choice)}.`;
+        updateScore("player");
+    }
+    else {  // comp win
+        roundStatus.textContent = `Round ${round}: You lose! ${toCap(c_choice)} beats ${toCap(p_choice)}.`;
+        updateScore("comp");
+    }
+    updateGame();
+}
